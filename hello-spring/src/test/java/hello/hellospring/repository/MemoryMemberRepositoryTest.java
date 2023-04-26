@@ -21,4 +21,21 @@ class MemoryMemberRepositoryTest {
         // Assertions.assertEquals(member, result);
         Assertions.assertThat(member).isEqualTo(result);
     }
+    @Test
+    public void findByName() {
+        // Given
+        Member member1 = new Member();
+        member1.setName("spring1");
+        repository.save(member1);
+
+        Member member2 = new Member();
+        member2.setName("spring2");
+        repository.save(member2);
+
+        // When
+        Member result = repository.findByName("spring1").get();
+
+        // Then
+        Assertions.assertThat(member1).isEqualTo(result);
+    }
 }

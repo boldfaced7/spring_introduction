@@ -8,6 +8,10 @@ public class MemoryMemberRepository implements MemberRepositroy {
     private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
 
+    public void clearStore() {
+        store.clear();
+    }
+
     @Override
     public Member save(Member member) {
         member.setId(++sequence);

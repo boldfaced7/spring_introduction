@@ -5,6 +5,7 @@ import hello.hellospring.repository.MemberRepositroy;
 import hello.hellospring.repository.MemoryMemberRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MemberService {
     private final MemberRepositroy memberRepositroy = new MemoryMemberRepository();
@@ -21,5 +22,8 @@ public class MemberService {
     }
     public List<Member> findMembers() {
         return memberRepositroy.findAll();
+    }
+    public Optional<Member> findOne(Long memberId) {
+        return memberRepositroy.findById(memberId);
     }
 }

@@ -2,13 +2,15 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepositroy;
-import hello.hellospring.repository.MemoryMemberRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class MemberService {
-    private final MemberRepositroy memberRepositroy = new MemoryMemberRepository();
+    private final MemberRepositroy memberRepositroy;
+    public MemberService(MemberRepositroy memberRepositroy) {
+        this.memberRepositroy = memberRepositroy;
+    }
     public Long join(Member member) {
         validateDuplicatedMember(member);
         memberRepositroy.save(member);

@@ -3,12 +3,13 @@ package hello.hellospring.repository;
 import hello.hellospring.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class JdbcTemplateMemberRepository implements MemberRepositroy {
     private final JdbcTemplate jdbcTemplate;
@@ -25,7 +26,15 @@ public class JdbcTemplateMemberRepository implements MemberRepositroy {
     }
     @Override
     public Member save(Member member) {
-        return null;
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", member.getName());
+
+        Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
+        member.setId(key.longValue());
+        return member;
     }
     @Override
     public Optional<Member> findById(Long id) {

@@ -1,6 +1,14 @@
 package hello.hellospring.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Member {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // DB가 id를 자동으로 생성해주는 것을 identity 전략이라고 부름
     private Long id;
     private String name;
 

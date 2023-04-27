@@ -17,14 +17,11 @@ public class JdbcTemplateMemberRepository implements MemberRepositroy {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     private RowMapper<Member> memberRowMapper() {
-        return new RowMapper<Member>() {
-            @Override
-            public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Member member = new Member();
-                member.setId(rs.getLong("id"));
-                member.setName(rs.getString("name"));
-                return member;
-            }
+        return (rs, rowNum) -> {
+            Member member = new Member();
+            member.setId(rs.getLong("id"));
+            member.setName(rs.getString("name"));
+            return member;
         };
     }
     @Override
